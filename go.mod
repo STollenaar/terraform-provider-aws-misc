@@ -2,10 +2,7 @@ module terraform-provider-aws-profiler
 
 go 1.18
 
-require (
-	github.com/STollenaar/aws-profiler-client v0.0.0-20220603225243-986a0c3663b4
-	github.com/hashicorp/terraform-plugin-framework v0.8.0
-)
+require github.com/hashicorp/terraform-plugin-framework v0.8.0
 
 require (
 	github.com/kr/text v0.2.0 // indirect
@@ -13,6 +10,7 @@ require (
 )
 
 require (
+	github.com/STollenaar/aws-profiler-client v0.0.0-20220609215912-548de16ee866
 	github.com/fatih/color v1.7.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect

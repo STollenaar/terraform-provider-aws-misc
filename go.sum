@@ -5,6 +5,8 @@ github.com/STollenaar/aws-profiler-client v0.0.0-20220602230559-d5ca304ba47f h1:
 github.com/STollenaar/aws-profiler-client v0.0.0-20220602230559-d5ca304ba47f/go.mod h1:elM1X8EYeHMqf3WpNkP9Tf7hWhAlMefpfcrMfxHwua4=
 github.com/STollenaar/aws-profiler-client v0.0.0-20220603225243-986a0c3663b4 h1:zdrlKDe2vY/DQCxQnA/hb7PzAy53Rlir8sxX1jMMZAY=
 github.com/STollenaar/aws-profiler-client v0.0.0-20220603225243-986a0c3663b4/go.mod h1:elM1X8EYeHMqf3WpNkP9Tf7hWhAlMefpfcrMfxHwua4=
+github.com/STollenaar/aws-profiler-client v0.0.0-20220609215912-548de16ee866 h1:9ZL93Sf4nuEYOrATYXAHQmMnXRIqiHKh9oSsaE/9d3A=
+github.com/STollenaar/aws-profiler-client v0.0.0-20220609215912-548de16ee866/go.mod h1:elM1X8EYeHMqf3WpNkP9Tf7hWhAlMefpfcrMfxHwua4=
 github.com/antihax/optional v1.0.0/go.mod h1:uupD/76wgC+ih3iEmQUL+0Ugr19nfwCT1kdvxnR2qWY=
 github.com/apparentlymart/go-textseg v1.0.0/go.mod h1:z96Txxhf3xSFMPmb5X/1W05FF/Nj9VFpLOpjS5yuumk=
 github.com/census-instrumentation/opencensus-proto v0.2.1/go.mod h1:f6KPmirojxKA12rnyqOA5BBL4O983OfeGPqjHWSTneU=
