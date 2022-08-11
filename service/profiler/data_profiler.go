@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	awsprofilerclient "github.com/STollenaar/aws-profiler-client"
+	awsmiscclient "github.com/STollenaar/aws-misc-client"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -52,7 +52,7 @@ func (r DataSourceListProfilesType) GetSchema(_ context.Context) (tfsdk.Schema, 
 }
 
 func (r DataSourceListProfilesType) NewDataSource(ctx context.Context, p tfsdk.Provider) (tfsdk.DataSource, diag.Diagnostics) {
-	c, err := awsprofilerclient.NewClient()
+	c, err := awsmiscclient.NewClient()
 	if err != nil {
 		d := diag.Diagnostics{}
 		d.AddError(
@@ -70,7 +70,7 @@ func (r DataSourceListProfilesType) NewDataSource(ctx context.Context, p tfsdk.P
 
 type dataSourceProfiles struct {
 	p      tfsdk.Provider
-	client *awsprofilerclient.Client
+	client *awsmiscclient.Client
 }
 
 func (r dataSourceProfiles) Read(ctx context.Context, req tfsdk.ReadDataSourceRequest, resp *tfsdk.ReadDataSourceResponse) {
@@ -79,7 +79,7 @@ func (r dataSourceProfiles) Read(ctx context.Context, req tfsdk.ReadDataSourceRe
 		Profile []ProfileDetails `tfsdk:"profiles"`
 	}
 
-	profiles, err := r.client.GetProfiles()
+	profiles, err := r.client.Profiler.GetProfiles()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error retrieving profiles",

@@ -5,12 +5,12 @@ go 1.18
 require github.com/hashicorp/terraform-plugin-framework v0.8.0
 
 require (
+	github.com/STollenaar/aws-misc-client v0.0.0-20220811230436-e499cc65db49
 	github.com/kr/text v0.2.0 // indirect
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 )
 
 require (
-	github.com/STollenaar/aws-profiler-client v0.0.0-20220609215912-548de16ee866
 	github.com/fatih/color v1.7.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/go-cmp v0.5.8 // indirect

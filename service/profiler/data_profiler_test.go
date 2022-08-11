@@ -3,17 +3,17 @@ package profiler
 import (
 	"testing"
 
-	awsprofilerclient "github.com/STollenaar/aws-profiler-client"
+	awsmiscclient "github.com/STollenaar/aws-misc-client"
 )
 
 // TestListProfiles defined data resource for the terraform plugin
 func TestListProfiles(t *testing.T) {
-	client, err := awsprofilerclient.NewClient()
+	client, err := awsmiscclient.NewClient()
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	profiles, err := client.GetProfiles()
+	profiles, err := client.Profiler.GetProfiles()
 	if err != nil {
 		t.Fatal(err)
 	}
