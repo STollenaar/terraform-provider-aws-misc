@@ -1,4 +1,4 @@
-module terraform-provider-aws-profiler
+module terraform-provider-aws-misc
 
 go 1.18
 

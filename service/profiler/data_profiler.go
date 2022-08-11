@@ -1,17 +1,19 @@
-package awsprofiler
+package profiler
 
 import (
 	"context"
 	"fmt"
+	"os"
 
+	awsprofilerclient "github.com/STollenaar/aws-profiler-client"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-type dataSourceListProfilesType struct{}
+type DataSourceListProfilesType struct{}
 
-func (r dataSourceListProfilesType) GetSchema(_ context.Context) (tfsdk.Schema, diag.Diagnostics) {
+func (r DataSourceListProfilesType) GetSchema(_ context.Context) (tfsdk.Schema, diag.Diagnostics) {
 	return tfsdk.Schema{
 		Attributes: map[string]tfsdk.Attribute{
 			"profiles": {
@@ -49,14 +51,26 @@ func (r dataSourceListProfilesType) GetSchema(_ context.Context) (tfsdk.Schema, 
 	}, nil
 }
 
-func (r dataSourceListProfilesType) NewDataSource(ctx context.Context, p tfsdk.Provider) (tfsdk.DataSource, diag.Diagnostics) {
+func (r DataSourceListProfilesType) NewDataSource(ctx context.Context, p tfsdk.Provider) (tfsdk.DataSource, diag.Diagnostics) {
+	c, err := awsprofilerclient.NewClient()
+	if err != nil {
+		d := diag.Diagnostics{}
+		d.AddError(
+			"Unable to create client",
+			"Unable to create aws profiler client:\n\n"+err.Error(),
+		)
+		return nil, d
+	}
+
 	return dataSourceProfiles{
-		p: *(p.(*provider)),
+		p:      p,
+		client: c,
 	}, nil
 }
 
 type dataSourceProfiles struct {
-	p provider
+	p      tfsdk.Provider
+	client *awsprofilerclient.Client
 }
 
 func (r dataSourceProfiles) Read(ctx context.Context, req tfsdk.ReadDataSourceRequest, resp *tfsdk.ReadDataSourceResponse) {
@@ -65,7 +79,7 @@ func (r dataSourceProfiles) Read(ctx context.Context, req tfsdk.ReadDataSourceRe
 		Profile []ProfileDetails `tfsdk:"profiles"`
 	}
 
-	profiles, err := r.p.client.GetProfiles()
+	profiles, err := r.client.GetProfiles()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Error retrieving profiles",
@@ -89,13 +103,13 @@ func (r dataSourceProfiles) Read(ctx context.Context, req tfsdk.ReadDataSourceRe
 		resourceState.Profile = append(resourceState.Profile, p)
 	}
 
-	fmt.Fprintf(stderr, "[DEBUG]-Resource State:%+v", resourceState)
+	fmt.Fprintf(os.Stderr, "[DEBUG]-Resource State:%+v", resourceState)
 
 	// Set state
 	diags := resp.State.Set(ctx, &resourceState)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
-		fmt.Fprint(stderr, "[DEBUG]- Encountered an error while reading")
+		fmt.Fprint(os.Stderr, "[DEBUG]- Encountered an error while reading")
 		return
 	}
 }

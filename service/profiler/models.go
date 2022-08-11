@@ -1,4 +1,4 @@
-package awsprofiler
+package profiler
 
 import (
 	"github.com/hashicorp/terraform-plugin-framework/types"

@@ -4,7 +4,7 @@ import (
 	"context"
 	"flag"
 	"log"
-	"terraform-provider-aws-profiler/awsprofiler"
+	"terraform-provider-aws-misc/service"
 
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
 )
@@ -16,11 +16,11 @@ func main() {
 	flag.Parse()
 
 	opts := providerserver.ServeOpts{
-		Address: "spices.dev/stollenaar/awsprofiler",
+		Address: "spices.dev/stollenaar/awsmisc",
 		Debug:   debug,
 	}
 
-	err := providerserver.Serve(context.Background(), awsprofiler.New, opts)
+	err := providerserver.Serve(context.Background(), service.New, opts)
 
 	if err != nil {
 		log.Fatal(err.Error())

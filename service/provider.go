@@ -1,13 +1,14 @@
-package awsprofiler
+package service
 
 import (
 	"context"
 	"fmt"
 	"os"
 
-	awsprofilerclient "github.com/STollenaar/aws-profiler-client"
 	"github.com/hashicorp/terraform-plugin-framework/diag"
 	"github.com/hashicorp/terraform-plugin-framework/tfsdk"
+
+	"terraform-provider-aws-misc/service/profiler"
 )
 
 var stderr = os.Stderr
@@ -18,7 +19,6 @@ func New() tfsdk.Provider {
 
 type provider struct {
 	configured bool
-	client     *awsprofilerclient.Client
 }
 
 // Provider schema struct
@@ -33,17 +33,8 @@ func (p *provider) Configure(ctx context.Context, req tfsdk.ConfigureProviderReq
 		fmt.Fprint(stderr, "[DEBUG]- Already encountered an error")
 		return
 	}
-	c, err := awsprofilerclient.NewClient()
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Unable to create client",
-			"Unable to create aws profiler client:\n\n"+err.Error(),
-		)
-		return
-	}
 
 	p.configured = true
-	p.client = c
 }
 
 // GetSchema -
@@ -56,7 +47,7 @@ func (p *provider) GetSchema(_ context.Context) (tfsdk.Schema, diag.Diagnostics)
 // GetDataSources - Defines provider data sources
 func (p *provider) GetDataSources(_ context.Context) (map[string]tfsdk.DataSourceType, diag.Diagnostics) {
 	return map[string]tfsdk.DataSourceType{
-		"awsprofiler_list": dataSourceListProfilesType{},
+		"awsmisc_profiler_list": profiler.DataSourceListProfilesType{},
 	}, nil
 }
 
